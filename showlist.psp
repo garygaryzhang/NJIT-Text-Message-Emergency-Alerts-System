@@ -1,0 +1,33 @@
+<%@ page language="PL/SQL" %>
+<%@ plsql procedure="showlist" %>
+<%!
+	found integer;
+	cursor ecurr is
+	select * from TABLE_SUBSCRIBE; %>
+<html>
+<head>
+    <title>Subscriber List</title>
+</head>
+<body>
+<table cellspacing="1" border="1" >
+   	<tr>
+   		<td><b>Areacode</b></td>
+   		<td><b>First3digits</b></td>
+   		<td><b>Last4digits</b></td>
+   		<td><b>Provider</b></td>
+   		<td><b>Subscription</b></td>
+   		</tr>
+   		<% FOR err IN ecurr LOOP %>
+   		<tr>
+   			<td><%=err.areacode %></td>
+   		    <td><%=err.first3digits %></td>
+   		    <td><%=err.last4digits %></td>
+   		    <td><%=err.provider %></td>
+   		    <td>Subscribed</td>
+        </tr>
+        <% END LOOP;%>
+    </table>
+    <br>
+<a href=SignUp>Go back </a>	
+    </body>
+</html>

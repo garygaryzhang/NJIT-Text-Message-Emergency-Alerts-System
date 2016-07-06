@@ -1,0 +1,65 @@
+<%@ page language="PL/SQL" %>
+<%@ plsql procedure="SignUp" %>
+<HTML>
+<head>
+  <tittle><b>Sign Up for NJIT Text-Message Emergency Alerts</b></tittle>
+  <script type="text/javaScript">
+          function valid(f) {
+          var re = /^[\d]*$/;
+          if (!re.test(f.value)) {
+          alert("only numbers are allowed");
+          f.value = f.value.replace(/[^\d]/g,"");
+        }
+} 
+
+function check() {
+var p_areacode = document.getElementById("p_areacode").value;
+var p_first3digits = document.getElementById("p_first3digits").value;
+var p_last4digits = document.getElementById("p_last4digits").value;
+  if(p_areacode>=100 && p_first3digits>=100 && p_last4digits>=100)
+  document.getElementById("form1").submit();
+else {
+  alert('input can not be null');
+  event.preventDefault();
+}
+}
+
+</script>
+</head>
+<body>
+<p>To receive NJIT Text-Message Emergency Alerts, enter your <b>cell phone number</b>, select
+your <b>cell phone carrier</b>, select "<b>Subscribe</b>" from Subscription Activation Selection, and
+click the "<b>Subscribe</b>" from Subscription Activation Selection, and 
+click the "<b>Submit</b>" button. You can cancel this service at any time by selecting
+"<b>Unsubscribe</b>".</p>
+
+<form id="form1" method="post" action="checkstatus" onsubmit="check()" >
+     <table cellspacing="5" border="0">
+         <tr><td>Area Code:</td><td align="left"><input id="p_areacode" type="tel" size="5" minlength="3" maxlength="3" name="p_areacode" onkeyup="valid(this) "></td></tr>
+           <tr><td>First 3 digits:</td><td align="left"><input id="p_first3digits" type="tel" size="5" minlength="3" maxlength="3" name="p_first3digits" onkeyup="valid(this)"></td></tr>
+           <tr><td>Last 4 Digits:</td><td align="left"><input id="p_last4digits" type="tel" size="5" minlength="4" maxlength="4" name="p_last4digits" onkeyup="valid(this)"></td></tr>
+           <tr><td>Cell Phone Provider:</td><td align="left">
+                                                             <select id="browers" name="p_provider">
+                                                                <option value ="Verizon" selected>Verizon</option>
+                                                                <option value ="AT&T">AT&T</option>
+                                                                <option value ="T-Mobile">T-Mobile</option>
+                                                                <option value ="Sprite">Sprite</option>
+                                                                <option value ="H2O">H2O</option>
+                                                             </select></td></tr></br>
+
+           <tr><td>Subscription Activation Selection:</td><td align="left"><input type="radio" name="p_subscription" value=1 checked="checked">                                                                 Subscribe
+                                                                           <input type="radio" name="p_subscription" value=0>
+                                                                            Unsubscribe</td>
+                                                                           </tr>
+           <tr><td><input type="submit" name="p_submit" value="Submit">
+               <input type="reset" name="reset" value="Reset"></td></tr>
+     </table>
+</form>
+<br>
+<a href=showlist>See subscribers</a>
+</body>
+</HTML>
+
+
+           
+

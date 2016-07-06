@@ -1,0 +1,96 @@
+<%@ page language="PL/SQL" %>
+<%@ plsql procedure="checkstatus" %>
+<%@ plsql parameter="p_areacode" default="NULL"%>
+<%@ plsql parameter="p_first3digits" default="NULL"%>
+<%@ plsql parameter="p_last4digits" default="NULL"%>
+<%@ plsql parameter="p_provider" default="NULL"%>
+<%@ plsql parameter="p_subscription" default="NULL"%>
+<%@ plsql parameter="p_submit" default="NULL"%>
+<%!
+	found integer;
+	cursor ecur is
+	select * from TABLE_SUBSCRIBE; %>
+
+<html>
+<head>
+    <title>Result</title>
+</head>
+<body>
+	<% if p_subscription = 1 then%>
+	<% select count(1) into found from Table_Subscribe where areacode=p_areacode and first3digits=p_first3digits and last4digits=p_last4digits;
+	if found = 0 then %>
+	<% insert into Table_Subscribe values(p_areacode,p_first3digits,p_last4digits,p_provider,p_subscription);%>
+	<h3>Thank You!</br>
+		You have successfully enrolled in NJIT's</br>
+		Text-Message Emergency Alert Service.</br>
+
+		Have a nice day.</h3>
+	<table cellspacing="1" border="1" >
+   	<tr>
+   		<td><b>Areacode</b></td>
+   		<td><b>First3digits</b></td>
+   		<td><b>Last4digits</b></td>
+   		<td><b>Provider</b></td>
+   		<td><b>Subscription</b></td>
+   		</tr>
+   		<% FOR er IN ecur LOOP %>
+   		<tr>
+   			<td><%=er.areacode %></td>
+   		    <td><%=er.first3digits %></td>
+   		    <td><%=er.last4digits %></td>
+   		    <td><%=er.provider %></td>
+   		    <td>Subscribed</td>
+        </tr>
+        <% END LOOP;%>
+    </table>
+	<%else%>
+  <script>
+	alert("existing subscriber")
+  </script>
+	<table cellspacing="1" border="1">
+   	<tr>
+   		<td><b>Areacode</b></td>
+   		<td><b>First3digits</b></td>
+   		<td><b>Last4digits</b></td>
+   		<td><b>Provider</b></td>
+   		<td><b>Subscription</b></td>
+   		</tr>
+   		<% FOR er IN ecur LOOP %>
+   		<tr>
+   			<td><%=er.areacode %></td>
+   		    <td><%=er.first3digits %></td>
+   		    <td><%=er.last4digits %></td>
+   		    <td><%=er.provider %></td>
+   		    <td>Subscribed</td>
+        </tr>
+        <% END LOOP;%>
+    </table>
+	
+	<% end if; %>
+	<%else%>
+	<%delete from Table_Subscribe where areacode=p_areacode and first3digits=p_first3digits and last4digits=p_last4digits;%>
+	You have unsubscribed
+	<table cellspacing="1" border="1">
+   	<tr>
+   		<td><b>Areacode</b></td>
+   		<td><b>First3digits</b></td>
+   		<td><b>Last4digits</b></td>
+   		<td><b>Provider</b></td>
+   		<td><b>Subscription</b></td>
+   		</tr>
+   		<% FOR er IN ecur LOOP %>
+   		<tr>
+   			<td><%=er.areacode %></td>
+   		    <td><%=er.first3digits %></td>
+   		    <td><%=er.last4digits %></td>
+   		    <td><%=er.provider %></td>
+   		    <td>Subscribed</td>
+        </tr>
+        <% END LOOP;%>
+    </table>
+	
+	<%end if;%>
+  <br>
+<a href=SignUp>Go back </a>	
+</body>
+</html>
